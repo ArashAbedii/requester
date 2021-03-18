@@ -2,7 +2,7 @@
 
 require 'lib/ServerClass.php';
 
-//SEND POST REQUEST
+//SEND GET REQUEST
 $url="https://api.deezer.com/search";
 $params=['q'=>'back to you'];
 $response=Server::sendRequest($url,$params,'get',[]);
