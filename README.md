@@ -1,18 +1,18 @@
 # SERVER
-# php class to work on different web services (API)
+## php class to work on different web services (API)
 
-# usage
+### usage
 to send all get and post requests we need to this static function : sendRequest(string url, array parameters, string request type= get or post, array headers);
 
- # example: 
+ ### example:
  
- SEND GET REQUEST 
- $url="https://api.deezer.com/search";
- $params=['q'=>'back to you'];
- $response=Server::sendRequest($url,$params,'get');
+ **SEND GET REQUEST** <br />
+ $url="https://api.deezer.com/search"; <br />
+ $params=['q'=>'back to you']; <br />
+ $response=Server::sendRequest($url,$params,'get'); <br />
 
 
-SEND POST REQUEST 
- $url="api url";
- $params=['parameters'=>'values'];
- $response=Server::sendRequest($url,$params,'post');
+**SEND POST REQUEST** <br />
+ $url="api url"; <br />
+ $params=['parameters'=>'values']; <br />
+ $response=Server::sendRequest($url,$params,'post'); <br />
