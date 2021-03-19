@@ -14,7 +14,7 @@ after you can call Server::sendRequest() to send your requests. <br />
  **SEND GET REQUEST** <br />
  $url="https://api.deezer.com/search"; <br />
  $params=['q'=>'back to you']; <br />
- $response=Server::sendRequest($url,$params,'get',['']); <br />
+ $response=Server::sendRequest($url,$params,'get'); <br />
 
 
 **SEND POST REQUEST** <br />
