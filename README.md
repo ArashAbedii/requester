@@ -2,7 +2,7 @@
 ## php class to work on different web services (API)
 
 ### usage
-to send all get and post requests we need to this static function : sendRequest(string url, array parameters, string request type= get or post, array headers); <br />
+Server::sendRequest(string url, array parameters, string request type= get or post, array headers); <br />
 
 at first include ServerClass.php file to your project file  <br />
 like: **require 'lib/ServerClass.php';** <br />
