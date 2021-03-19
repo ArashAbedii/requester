@@ -4,6 +4,11 @@
 ### usage
 to send all get and post requests we need to this static function : sendRequest(string url, array parameters, string request type= get or post, array headers);
 
+at first include ServerClass.php file to your project file 
+like: **require 'lib/ServerClass.php';**
+after you can call Server::sendRequest() to send your requests.
+**Notice**: Make sure that the config.php file is next to the ServerClass.php file.
+
  ### examples:
  
  **SEND GET REQUEST** <br />
