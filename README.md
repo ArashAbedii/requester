@@ -6,7 +6,13 @@ to send all get and post requests we need to this static function : sendRequest(
 
  # example: 
  
- //SEND GET REQUEST
+ SEND GET REQUEST 
  $url="https://api.deezer.com/search";
  $params=['q'=>'back to you'];
  $response=Server::sendRequest($url,$params,'get');
+
+
+SEND POST REQUEST 
+ $url="api url";
+ $params=['parameters'=>'values'];
+ $response=Server::sendRequest($url,$params,'post');
