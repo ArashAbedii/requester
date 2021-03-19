@@ -19,7 +19,7 @@ to send all get and post requests we need to this static function : sendRequest(
 
 
 **SEND POST REQUEST WITH HEADERS** <br />
-  $url="https://api.spotify.com/v1/artists/**SPOTIFY_ARTIST_ID** "; <br />
+  $url="https://api.spotify.com/v1/artists/SPOTIFY_ARTIST_ID "; <br />
   $request_type="get"; <br />
   $headers=['Authorization'=>'Bearer **SPOTIFY_ACCESS_TOKEN**']; <br />
   //send request <br />
