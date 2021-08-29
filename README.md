@@ -10,18 +10,18 @@ Server::sendRequest(string url, array parameters, string request type= get or po
 
 <br/><br/>
 
-### at first include Server.php file to your project file  <br/>
+#### at first include Server.php file to your project file  <br/>
 ```
 require 'Server.php'; 
 ```
-### after you can call Server::sendRequest() to send your requests. 
+#### after you can call Server::sendRequest() to send your requests. 
 
 <br/><br/>
 
  ## examples: 
  
  <br/>
- 
+
  **SEND GET REQUEST** <br />
  ```PHP
   <?php
