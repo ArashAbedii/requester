@@ -1,31 +1,82 @@
 # SERVER
 ## php class to work on different web services (API)
 
-### usage
-Server::sendRequest(string url, array parameters, string request type= get or post, array headers); <br />
+<br/>
 
-at first include ServerClass.php file to your project file  <br />
-like: **require 'lib/ServerClass.php';** <br />
-after you can call Server::sendRequest() to send your requests. <br />
-**Notice**: Make sure that the config.php file is next to the ServerClass.php file. <br />
+## usage
+```
+Server::sendRequest(string url, array parameters, string request type= get or post, array headers); 
+```
 
- ### examples: 
+<br/><br/>
+
+### at first include Server.php file to your project file  <br/>
+```
+require 'Server.php'; 
+```
+### after you can call Server::sendRequest() to send your requests. 
+
+<br/><br/>
+
+ ## examples: 
+ 
+ <br/>
  
  **SEND GET REQUEST** <br />
- $url="https://api.deezer.com/search"; <br />
- $params=['q'=>'back to you']; <br />
- $response=Server::sendRequest($url,$params,'get'); <br />
+ ```PHP
+  <?php
+
+      require 'Server.php';
+
+      //SEND GET REQUEST
+      $url="https://cat-fact.herokuapp.com/facts/random";
+      $params=['animal_type'=>'cat','amount'=>5];
+      $response=Server::sendRequest($url,$params,'GET');
+
+      echo '<pre>';
+      var_dump(json_decode($response,true));
+      echo '</pre>';
+
+ ```
+<br/><br/>
 
 
-**SEND POST REQUEST** <br />
- $url="api url"; <br />
- $params=['parameters'=>'values']; <br />
- $response=Server::sendRequest($url,$params,'post'); <br />
+**SEND POST REQUEST** <br/>
+```PHP
+  <?php
+
+      require 'Server.php';
+
+      //SEND POST REQUEST
+      $url="https://api.example.com/method";
+      $params=['parameter1'=>'1','parameter2'=>2];
+      $response=Server::sendRequest($url,$params,'POST');
+
+      echo '<pre>';
+      var_dump(json_decode($response,true));
+      echo '</pre>';
+
+```
+
+<br/><br/>
 
 
-**SEND POST REQUEST WITH HEADERS** <br />
-  $url="https://api.spotify.com/v1/artists/SPOTIFY_ARTIST_ID "; <br />
-  $request_type="get"; <br />
-  $headers=['Authorization'=>'Bearer **SPOTIFY_ACCESS_TOKEN**']; <br />
-  //send request <br />
-  $response=Server::sendRequest($url,[],$request_type,$headers); <br />
+**SEND POST REQUEST WITH HEADERS**  <br/>
+
+  ```PHP
+  <?php
+
+      require 'Server.php';
+
+      //SEND POST REQUEST
+      $url="https://api.example.com/v1/method";
+      $headers=['Authorization'=>'Bearer ACCESS_TOKEN'];
+      $params=[];
+      //send request
+      $response=Server::sendRequest($url,[],$request_type,$headers); 
+
+      echo '<pre>';
+      var_dump(json_decode($response,true));
+      echo '</pre>';
+
+```

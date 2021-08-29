@@ -31,7 +31,7 @@ class Server{
 
 
 
-        if(strtolower($type=='get')){
+        if(strtolower($type)=='get'){
 
             //GET REQUESTS
 
