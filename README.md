@@ -79,7 +79,7 @@ require 'Server.php';
 
       require 'Server.php';
 
-      //SEND POST REQUEST
+      //SEND PUT REQUEST
       $url="https://api.example.com/method";
       $params=['parameter1'=>'1','parameter2'=>2];
       $response=Server::sendRequest($url,$params,'PUT');
@@ -98,7 +98,7 @@ require 'Server.php';
 
       require 'Server.php';
 
-      //SEND POST REQUEST
+      //SEND DELETE REQUEST
       $url="https://api.example.com/method";
       $params=['parameter1'=>'1','parameter2'=>2];
       $response=Server::sendRequest($url,$params,'DELETE');
