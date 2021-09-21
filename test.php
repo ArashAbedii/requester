@@ -2,12 +2,11 @@
 
 require 'Server.php';
 
-
-//SEND GET REQUEST
-$url="https://cat-fact.herokuapp.com/facts/random";
-$params=['animal_type'=>'cat','amount'=>5];
-$response=Server::sendRequest($url,$params,'GET');
+$url="http://localhost:8001/hello";
+$type="put";
+$params=['q'=>1,'b'=>2];
+$headers=['Accept'=>'application/json'];
 
 echo '<pre>';
-var_dump(json_decode($response,true));
+echo Server::sendRequest($url,$params,$type,$headers);
 echo '</pre>';

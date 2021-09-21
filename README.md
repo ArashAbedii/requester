@@ -3,9 +3,22 @@
 
 <br/>
 
+## full update in v2
+### what's news?
+Added other types of HTTP requests such as PUT, PATCH, DELETE <br>
+updated send requests without response <br>
+return headers with responses <br> to get headers with response, put true in 5th parameter of sendRequest method
+
+
+
+
+
+<br>
+<br>
+
 ## usage
 ```
-Server::sendRequest(string url, array parameters, string request type= get or post, array headers); 
+Server::sendRequest(string url, array parameters, string request type= get or post or put ... , array headers,bool return headers=true or false); 
 ```
 
 <br/><br/>
@@ -51,6 +64,44 @@ require 'Server.php';
       $url="https://api.example.com/method";
       $params=['parameter1'=>'1','parameter2'=>2];
       $response=Server::sendRequest($url,$params,'POST');
+
+      echo '<pre>';
+      var_dump(json_decode($response,true));
+      echo '</pre>';
+
+```
+
+<br/><br/>
+
+**SEND PUT REQUEST** <br/>
+```PHP
+  <?php
+
+      require 'Server.php';
+
+      //SEND POST REQUEST
+      $url="https://api.example.com/method";
+      $params=['parameter1'=>'1','parameter2'=>2];
+      $response=Server::sendRequest($url,$params,'PUT');
+
+      echo '<pre>';
+      var_dump(json_decode($response,true));
+      echo '</pre>';
+
+```
+
+<br/><br/>
+
+**SEND DELETE REQUEST** <br/>
+```PHP
+  <?php
+
+      require 'Server.php';
+
+      //SEND POST REQUEST
+      $url="https://api.example.com/method";
+      $params=['parameter1'=>'1','parameter2'=>2];
+      $response=Server::sendRequest($url,$params,'DELETE');
 
       echo '<pre>';
       var_dump(json_decode($response,true));
