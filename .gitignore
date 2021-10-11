@@ -1,1 +1,4 @@
 /vendor/
+/src/log.txt
+/test/myTestLogFile.txt
+/test/log.txt
