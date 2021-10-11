@@ -21,5 +21,7 @@
             "role": "Developer"
         }
     ],
-    "require": {}
+    "require": {
+        "filp/whoops": "^2.14"
+    }
 }
