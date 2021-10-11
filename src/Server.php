@@ -175,15 +175,21 @@ class Server extends Logger{
         if($responsve !== false) 
             return $responsve; 
         else
-            return $this->curlError();
+            $this->curlError();
         
         curl_close($this->curlInit);
 
     }
-
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     protected function curlError() {
         $this->errors['curl_error'] = curl_error($this->curlInit);
         self::saveLog('CURLERROR: ' . $this->errors['curl_error']);
+        
+        
     }
 
     /**
