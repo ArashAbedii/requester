@@ -88,7 +88,7 @@ class Server extends Logger{
      * @param array $proxy
      * @return string
      */
-    public function sendRequest(string $url, array $params = [], string $method = 'get', array $headers = [] , array $proxy) {
+    public function sendRequest(string $url, array $params = [], string $method = 'get', array $headers = [] , array $proxy = []) {
 
         # Check inputs
         $this->checkInputs(['url' => $url , 'proxy' => $proxy]);
@@ -258,8 +258,8 @@ class Server extends Logger{
 
         if(isset($this->proxy['auth'])) {
 
-            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->proxy['auth']);
+            curl_setopt($this->curlInit, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($this->curlInit, CURLOPT_PROXYUSERPWD, $this->proxy['auth']);
 
         }
 
