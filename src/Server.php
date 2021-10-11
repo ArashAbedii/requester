@@ -219,6 +219,32 @@ class Server extends Logger{
 
     }
 
+    /**
+     * A method for sending a direct request to get
+     *
+     * @param string $url
+     * @param array $params
+     * @param array $headers
+     * @return string
+     */
+    public function get(string $url , array $params = [] , array $headers = []) {
+
+        # Check inputs
+        $this->checkInputs(['url' => $url]);
+
+        if(!$this->haveError) {
+
+            $this->url = $url;
+            $this->params = $params;
+            $this->method = "GET";
+            $this->headers = $headers;
+
+            return $this->createRequest()->exec();
+            
+        }
+
+    }
+
 
 
 
