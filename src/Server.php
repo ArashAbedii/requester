@@ -186,6 +186,7 @@ class Server extends Logger{
      * @return void
      */
     protected function curlError() {
+        $this->haveError = true;
         $this->errors['curl_error'] = curl_error($this->curlInit);
         self::saveLog('CURLERROR: ' . $this->errors['curl_error']);
         
