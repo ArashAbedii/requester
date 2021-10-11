@@ -1,10 +1,18 @@
 <?php
-
+    /**
+     * A class for sending data to other servers and working with the api
+     * 
+     * 
+     * @author      ArashAbedii <arashabedi998@gmail.com>
+     * @author      mhmmdq <mhmmdq@mhmmdq.ir>
+     * @copyright   Copyright (c), 2021 ArashAbedii
+     * @license     MIT public license
+     */
 namespace ArashAbedii\Server;
 
 class Server extends Logger{
 
-    private static $err=false; 
+    private static $err = false; 
 
     //USAGE SEND REQUEST FUNCTION
 
