@@ -17,7 +17,7 @@ class Server extends Logger{
      *
      * @var boolean
      */
-    protected  $haveError = false; 
+    public  $haveError = false; 
 
     /**
      * The target url for sending data and receiving output is in this variable
@@ -66,7 +66,7 @@ class Server extends Logger{
      *
      * @var array
      */
-    protected $errors = [];
+    public $errors = [];
 
     public function __construct()
     {
