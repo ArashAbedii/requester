@@ -1,5 +1,6 @@
 {
     "name": "arashabedii/server",
+    "type": "library",
     "description": "php class to work on different web services",
     "license": "MIT",
     "autoload": {
