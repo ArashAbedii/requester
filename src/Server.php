@@ -170,12 +170,21 @@ class Server extends Logger{
      */
 
     public function exec() {
+        $responsve = curl_exec($this->curlInit);
 
-        return curl_exec($this->curlInit);
+        if($responsve !== false) 
+            return $responsve; 
+        else
+            return $this->curlError();
+        
         curl_close($this->curlInit);
 
     }
 
+    protected function curlError() {
+        $this->errors['curl_error'] = curl_error($this->curlInit);
+        self::saveLog('CURLERROR: ' . $this->errors['curl_error']);
+    }
 
     /**
      * Examines the inputs
