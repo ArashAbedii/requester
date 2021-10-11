@@ -279,6 +279,15 @@ class Server extends Logger{
         }
 
     }
+    /**
+     * Move the user to a new page
+     *
+     * @param string $url
+     * @return void
+     */
+    public function redirect(string $url) {
+        header('location: ' . $url);
+    }
 
 
 
