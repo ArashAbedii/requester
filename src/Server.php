@@ -181,7 +181,7 @@ class Server extends Logger{
 
     }
     /**
-     * Undocumented function
+     * Save curl problems in the list of errors
      *
      * @return void
      */
@@ -189,7 +189,7 @@ class Server extends Logger{
         $this->errors['curl_error'] = curl_error($this->curlInit);
         self::saveLog('CURLERROR: ' . $this->errors['curl_error']);
         
-        
+
     }
 
     /**
