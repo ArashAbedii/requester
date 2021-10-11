@@ -85,6 +85,7 @@ class Server extends Logger{
      * @param array $params
      * @param string $type
      * @param array $headers
+     * @param array $proxy
      * @return string
      */
     public function sendRequest(string $url, array $params = [], string $method = 'get', array $headers = [] , array $proxy) {
@@ -125,6 +126,10 @@ class Server extends Logger{
 
         if(!empty($this->headers)) {
             $this->useCustomHeader();
+        }
+
+        if(!empty($this->proxy)) {
+            $this->connectProxyServer();
         }
 
 
@@ -191,6 +196,24 @@ class Server extends Logger{
 
         }
 
+        if(isset($proxy) && !empty($proxy)) {
+
+            if(!filter_var($proxy['ip'] , FILTER_VALIDATE_IP)) {
+                $this->haveError = true;
+                $this->errors[]  = 'You need a valid IP to connect to the proxy';
+                self::saveLog('You need a valid IP to connect to the proxy');
+            }
+
+            if(is_numeric($proxy['port'])) {
+
+                $this->haveError = true;
+                $this->errors[]  = 'The proxy port must be a number';
+                self::saveLog('The proxy port must be a number');
+
+            }
+
+        }
+
 
     }
 
@@ -200,6 +223,7 @@ class Server extends Logger{
      * @param string $url
      * @param array $params
      * @param array $headers
+     * @param array $proxy
      * @return string
      */
     public function post(string $url , array $params = [] , array $headers = [] , array $proxy = []) {
@@ -214,11 +238,30 @@ class Server extends Logger{
      * @param string $url
      * @param array $params
      * @param array $headers
+     * @param array $proxy
      * @return string
      */
     public function get(string $url , array $params = [] , array $headers = [] , array $proxy = []) {
 
         return $this->sendRequest($url , $params , "GET" , $headers , $proxy);
+
+    }
+    /**
+     * Connect to the http proxy
+     *
+     * @return void
+     */
+    public function connectProxyServer() {
+
+        curl_setopt($this->curlInit, CURLOPT_PROXY, $this->proxy['ip']);
+        curl_setopt($this->curlInit, CURLOPT_PROXYPORT, $this->proxy['port']);
+
+        if(isset($this->proxy['auth'])) {
+
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->proxy['auth']);
+
+        }
 
     }
 
