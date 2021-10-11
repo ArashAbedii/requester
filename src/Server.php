@@ -50,7 +50,7 @@ class Server extends Logger{
     /**
      * curl is kept in this variable
      *
-     * @var curl
+     * 
      */
     public $curlInit;
 
@@ -108,7 +108,7 @@ class Server extends Logger{
     /**
      * Make a request ready to send
      *
-     * @return void
+     * 
      */
     protected function createRequest() {
         
