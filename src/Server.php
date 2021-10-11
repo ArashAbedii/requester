@@ -87,10 +87,10 @@ class Server extends Logger{
      * @param array $headers
      * @return string
      */
-    public function sendRequest(string $url, array $params = [], string $method = 'get', array $headers = []) {
+    public function sendRequest(string $url, array $params = [], string $method = 'get', array $headers = [] , array $proxy) {
 
         # Check inputs
-        $this->checkInputs(['url' => $url]);
+        $this->checkInputs(['url' => $url , 'proxy' => $proxy]);
 
         if(!$this->haveError) {
 
@@ -98,6 +98,7 @@ class Server extends Logger{
             $this->params = $params;
             $this->method = strtoupper($method);
             $this->headers = $headers;
+            $this->proxy = $proxy;
 
             return $this->createRequest()->exec();
             
@@ -201,21 +202,9 @@ class Server extends Logger{
      * @param array $headers
      * @return string
      */
-    public function post(string $url , array $params = [] , array $headers = []) {
+    public function post(string $url , array $params = [] , array $headers = [] , array $proxy = []) {
 
-        # Check inputs
-        $this->checkInputs(['url' => $url]);
-
-        if(!$this->haveError) {
-
-            $this->url = $url;
-            $this->params = $params;
-            $this->method = "POST";
-            $this->headers = $headers;
-
-            return $this->createRequest()->exec();
-            
-        }
+       return $this->sendRequest($url , $params , "POST" , $headers , $proxy);
 
     }
 
@@ -227,21 +216,9 @@ class Server extends Logger{
      * @param array $headers
      * @return string
      */
-    public function get(string $url , array $params = [] , array $headers = []) {
+    public function get(string $url , array $params = [] , array $headers = [] , array $proxy = []) {
 
-        # Check inputs
-        $this->checkInputs(['url' => $url]);
-
-        if(!$this->haveError) {
-
-            $this->url = $url;
-            $this->params = $params;
-            $this->method = "GET";
-            $this->headers = $headers;
-
-            return $this->createRequest()->exec();
-            
-        }
+        return $this->sendRequest($url , $params , "GET" , $headers , $proxy);
 
     }
 
