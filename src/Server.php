@@ -2,7 +2,7 @@
 
 namespace ArashAbedii\Server;
 
-class Server{
+class Server extends Logger{
 
     private static $err=false; 
 
@@ -40,9 +40,11 @@ class Server{
             curl_setopt($ch,CURLOPT_URL,$url);
             curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
         }else{
-            file_put_contents("ErrHandler.log","\nERR MESSAGE: Parameter format is incorrect. You should send array or binary format !\t".date("d M Y H:i:s"),FILE_APPEND);
+
+            self::saveLog('Parameter format is incorrect. You should send array or binary format!');
             echo "ERR! Check ErrHandler.log file on your project directory\n";
             return false;
+
         }
         
         if($return_header){
@@ -70,10 +72,12 @@ class Server{
         }elseif(strtolower($type)=='post'){
             curl_setopt($ch,CURLOPT_URL,$url);
             curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
-        }else{
-            file_put_contents("ErrHandler.log","\nERR MESSAGE: Parameter format is incorrect. You should send array or binary format !\t".date("d M Y H:i:s"),FILE_APPEND);
+        }else {
+
+            self::saveLog('Parameter format is incorrect. You should send array or binary format!');
             echo "ERR! Check ErrHandler.log file on your project directory\n";
             return false;
+
         }
         
         curl_setopt($ch,CURLOPT_CUSTOMREQUEST,$type);
@@ -135,7 +139,7 @@ class Server{
 
         if(empty($url)){
 
-            file_put_contents("ErrHandler.log","\nERR MESSAGE: Url required !\t".date("d M Y H:i:s"),FILE_APPEND);
+            self::saveLog('Url required!');
 
             self::$err=true;
 
@@ -143,7 +147,7 @@ class Server{
 
         if(!filter_var($url,FILTER_VALIDATE_URL)){
 
-            file_put_contents("ErrHandler.log","\nERR MESSAGE: Invalid url format !\t".date("d M Y H:i:s"),FILE_APPEND);
+            self::saveLog('Invalid url format!');
 
             self::$err=true;
 
@@ -158,7 +162,7 @@ class Server{
 
         if(!is_array($headers)){
 
-            file_put_contents("ErrHandler.log","\nERR MESSAGE: Invalid headers format! headers format should be an array\t".date("d M Y H:i:s"),FILE_APPEND);
+            self::saveLog('Invalid headers format! headers format should be an array');
 
             self::$err=true;
 
@@ -172,7 +176,7 @@ class Server{
 
         if(empty($reqtype)){
 
-            file_put_contents("ErrHandler.log","\nERR MESSAGE: Request type required! put GET or POST or etc type\t".date("d M Y H:i:s"),FILE_APPEND);
+            self::saveLog('Request type required! put GET or POST or etc type');
 
             self::$err=true;
 
