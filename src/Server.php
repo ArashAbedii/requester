@@ -192,9 +192,9 @@ class Server extends Logger{
 
 
     }
-    
+
     /**
-     * Undocumented function
+     * A method for sending a direct request to Post
      *
      * @param string $url
      * @param array $params
