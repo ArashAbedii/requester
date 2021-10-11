@@ -1,0 +1,28 @@
+{
+    "name": "arashabedii/server",
+    "type": "library",
+    "description": "php class to work on different web services",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ArashAbedii\\Server\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mhmmdq",
+            "email": "mhmmdq@mhmmdq.ir",
+            "homepage": "https://github.com/mhmmdq",
+            "role": "Developer"
+        },
+        {
+            "name": "ArashAbedii",
+            "email": "arashabedi998@gmail.com",
+            "homepage": "https://arashabedi.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "filp/whoops": "^2.14"
+    }
+}
