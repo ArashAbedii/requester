@@ -85,7 +85,7 @@ class Server extends Logger{
      * @param array $params
      * @param string $type
      * @param array $headers
-     * @return void
+     * @return string
      */
     public function sendRequest(string $url, array $params = [], string $method = 'get', array $headers = []) {
 
@@ -192,7 +192,32 @@ class Server extends Logger{
 
 
     }
+    
+    /**
+     * Undocumented function
+     *
+     * @param string $url
+     * @param array $params
+     * @param array $headers
+     * @return string
+     */
+    public function post(string $url , array $params = [] , array $headers = []) {
 
+        # Check inputs
+        $this->checkInputs(['url' => $url]);
+
+        if(!$this->haveError) {
+
+            $this->url = $url;
+            $this->params = $params;
+            $this->method = "POST";
+            $this->headers = $headers;
+
+            return $this->createRequest()->exec();
+            
+        }
+
+    }
 
 
 
