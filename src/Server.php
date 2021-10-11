@@ -204,7 +204,7 @@ class Server extends Logger{
                 self::saveLog('You need a valid IP to connect to the proxy');
             }
 
-            if(is_numeric($proxy['port'])) {
+            if(!is_numeric($proxy['port'])) {
 
                 $this->haveError = true;
                 $this->errors[]  = 'The proxy port must be a number';
