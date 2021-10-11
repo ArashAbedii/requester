@@ -4,9 +4,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use ArashAbedii\Server\Server;
 
-
-$request = new Server;
-
 class RequestTest {
 
     public static function test() {
