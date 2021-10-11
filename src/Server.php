@@ -12,183 +12,184 @@ namespace ArashAbedii\Server;
 
 class Server extends Logger{
 
-    private static $err = false; 
+    /**
+     * If a problem occurs, the value changes to true
+     *
+     * @var boolean
+     */
+    protected  $haveError = false; 
 
-    //USAGE SEND REQUEST FUNCTION
+    /**
+     * The target url for sending data and receiving output is in this variable
+     *
+     * @var string
+     */
+    protected $url;
 
-    public static function sendRequest($url,array $params=[],$type='get',array $headers=[]){
+    /**
+     * The values ​​to be sent to the url are included in this array
+     *
+     * @var array
+     */
+    protected $params = [];
 
-        //check valid data
+    /**
+     * The method of sending values ​​to the url is included in this presentation
+     *
+     * @var string
+     */
+    protected $method;
 
-        self::validateUrl($url);
+    /**
+     * Headers that need to be sent to the url are included in this presentation
+     *
+     * @var array
+     */
+    protected $headers = [];
 
-        self::validHeaders($headers);
+    /**
+     * curl is kept in this variable
+     *
+     * @var curl
+     */
+    public $curlInit;
 
-        self::validType($type);
+    /**
+     * Proxies are maintained for connection in this presentation
+     *
+     * @var array
+     */
+    protected $proxy = [];
 
+    /**
+     * All errors are stored in this variable
+     *
+     * @var array
+     */
+    protected $errors = [];
 
-
-        if(self::$err==true){
-
-            echo "ERR! Check ErrHandler.log file on your project directory\n";
-
-            return FALSE;
-
+    public function __construct()
+    {
+        if (!extension_loaded('curl')) {
+            self::saveLog('cURL library is not loaded');
+            throw new \Exception('cURL library is not loaded');
         }
 
-        return self::createRequest($url,strtoupper($type),$params,$headers);
-
+        $this->curlInit = curl_init();
     }
 
-    private static function createRequest($url,$type='get',$params=[],$headers=[],$return_header=false){
-        $ch=curl_init();
-        if(is_array($params)){
-            curl_setopt($ch,CURLOPT_URL,$url.Server::changeArrayToGetFormat($params));
-        }elseif(strtolower($type)=='post'){
-            curl_setopt($ch,CURLOPT_URL,$url);
-            curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
-        }else{
+    /**
+     * Send a request to the desired url
+     *
+     * @param string $url
+     * @param array $params
+     * @param string $type
+     * @param array $headers
+     * @return void
+     */
+    public function sendRequest(string $url, array $params = [], string $method = 'get', array $headers = []) {
 
-            self::saveLog('Parameter format is incorrect. You should send array or binary format!');
-            echo "ERR! Check ErrHandler.log file on your project directory\n";
-            return false;
+        # Check inputs
+        $this->checkInputs(['url' => $url]);
 
+        if(!$this->haveError) {
+
+            $this->url = $url;
+            $this->params = $params;
+            $this->method = strtoupper($method);
+            $this->headers = $headers;
+
+            return $this->createRequest()->exec();
+            
         }
+    }
+    /**
+     * Make a request ready to send
+     *
+     * @return void
+     */
+    protected function createRequest() {
         
-        if($return_header){
-            curl_setopt($ch,CURLOPT_HEADER,1);
-        }
         
-        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,$type);
-        curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
-
-        $result=curl_exec($ch);
-        curl_close($ch);
-       
-        return $result;
-
-    }
-
-    //SEND REQUEST WITHOUT RESPONSE
-
-    public static function sendRequestWithoutResponse($url,$type='get',$params=[],$headers=[]){
-        $ch=curl_init();
-        if(is_array($params)){
-            curl_setopt($ch,CURLOPT_URL,$url.Server::changeArrayToGetFormat($params));
-        }elseif(strtolower($type)=='post'){
-            curl_setopt($ch,CURLOPT_URL,$url);
-            curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
-        }else {
-
-            self::saveLog('Parameter format is incorrect. You should send array or binary format!');
-            echo "ERR! Check ErrHandler.log file on your project directory\n";
-            return false;
-
-        }
         
-        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,$type);
-        curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,false);
-        curl_setopt($ch,CURLOPT_TIMEOUT,1);
-        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,1);
-
-        $result=curl_exec($ch);
-        curl_close($ch);
-       
-        return $result;
-    }
-
-
-
-
-    //MAKING VALID FORMAT
-
-
-
-    private static function changeArrayToGetFormat($params){
-
-        $output=''; 
-
-        foreach($params as $key=>$value){
-            $value=str_replace(" ","%20",$value);
-            $output.=$key."=".$value."&";
-
+        if($this->method == "GET") {
+            $this->url .= "?" . http_build_query($this->params);
         }
 
-        return "?".trim($output,"&"); //return GET format (?a=1&b=2&c=3)
+        curl_setopt($this->curlInit , CURLOPT_URL , $this->url);
 
-    }
-
-
-
-    private static function changeArrayToHeaderFormat($headers){
-
-        $output=array();
-
-        foreach($headers as $key=>$value){
-
-            $output[]="$key: $value";
-
+        if($this->method == "POST") {
+            $this->sendPostRequest();
         }
 
-        return $output; //return array of headers format (["Referer: https://www.google.com/","Content-type: audio/mpeg"])
+        if(!empty($this->headers)) {
+            $this->useCustomHeader();
+        }
+
+
+
+        
+        curl_setopt($this->curlInit, CURLOPT_RETURNTRANSFER, true);
+
+        return $this;
+
+    }
+    /**
+     * If the method is post, the requirements apply
+     *
+     * @return void
+     */
+    protected function sendPostRequest() {
+
+        curl_setopt($this->curlInit , CURLOPT_POST , 1);
+        curl_setopt($this->curlInit , CURLOPT_POSTFIELDS , $this->params);
 
     }
 
+    /**
+     * Headers apply if the user has a specific header to send
+     *
+     * @return void
+     */
+    protected function useCustomHeader() {
 
+        curl_setopt($this->curlInit , CURLOPT_HTTPHEADER , $this->headers);
 
+    }
 
+    /**
+     * Executes the output and returns the result
+     *
+     * @return string
+     */
 
-    //CHECK VALIDATE INPUTS
+    public function exec() {
 
-    private static function validateUrl($url){
-
-        if(empty($url)){
-
-            self::saveLog('Url required!');
-
-            self::$err=true;
-
-        }
-
-        if(!filter_var($url,FILTER_VALIDATE_URL)){
-
-            self::saveLog('Invalid url format!');
-
-            self::$err=true;
-
-        }
+        return curl_exec($this->curlInit);
+        curl_close($this->curlInit);
 
     }
 
 
+    /**
+     * Examines the inputs
+     *
+     * @param array $inputs
+     * @return void
+     */
+    protected function checkInputs(array $inputs)
+    {
+        
+        extract($inputs);
 
+        if(!isset($url) && !filter_var($url , FILTER_VALIDATE_URL)) {
 
-    private static function validHeaders($headers){
-
-        if(!is_array($headers)){
-
-            self::saveLog('Invalid headers format! headers format should be an array');
-
-            self::$err=true;
-
-        }
-
-    }
-
-
-
-    private static function validType($reqtype){
-
-        if(empty($reqtype)){
-
-            self::saveLog('Request type required! put GET or POST or etc type');
-
-            self::$err=true;
+            $this->haveError = true;
+            $this->errors[]  = 'A valid url is required';
+            self::saveLog('A valid url is required');
 
         }
+
 
     }
 
