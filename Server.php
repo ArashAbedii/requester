@@ -7,7 +7,7 @@ class Server{
 
     //USAGE SEND REQUEST FUNCTION
 
-    public static function sendRequest($url,array $params=[],$type='get',array $headers=[]){
+    public static function sendRequest($url,array $params=[],$type='get',array $headers=[],$return_header=false){
 
         //check valid data
 
@@ -27,7 +27,7 @@ class Server{
 
         }
 
-        return self::createRequest($url,strtoupper($type),$params,$headers);
+        return self::createRequest($url,strtoupper($type),$params,$headers,$return_header);
 
     }
 
