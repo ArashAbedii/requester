@@ -2,10 +2,11 @@
 
 require 'Server.php';
 
-$url="http://localhost:8001/hello";
-$type="put";
-$params=['q'=>1,'b'=>2];
-$headers=['Accept'=>'application/json'];
+$url="http://localhost:8005/app.php";
+$type="post";
+$params=['q'=>'hello','param2'=>1];
+
+$headers=['Content-Type'=>'application/json'];
 
 echo '<pre>';
 echo Server::sendRequest($url,$params,$type,$headers);
