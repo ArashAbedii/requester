@@ -7,7 +7,7 @@ class Server{
 
     //USAGE SEND REQUEST FUNCTION
 
-    public static function sendRequest($url,array $params=[],$type='get',array $headers=[],$return_header=false){
+    public static function sendRequest($url,$params=[],$type='get',array $headers=[],$return_header=false){
 
         //check valid data
 
@@ -16,7 +16,6 @@ class Server{
         self::validHeaders($headers);
 
         self::validType($type);
-
 
 
         if(self::$err==true){
@@ -32,49 +31,57 @@ class Server{
     }
 
     private static function createRequest($url,$type='get',$params=[],$headers=[],$return_header=false){
-        $ch=curl_init();
-        if(is_array($params)){
-            curl_setopt($ch,CURLOPT_URL,$url.Server::changeArrayToGetFormat($params));
-        }elseif(strtolower($type)=='post'){
-            curl_setopt($ch,CURLOPT_URL,$url);
-            curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
-        }else{
-            file_put_contents("ErrHandler.log","\nERR MESSAGE: Parameter format is incorrect. You should send array or binary format !\t".date("d M Y H:i:s"),FILE_APPEND);
-            echo "ERR! Check ErrHandler.log file on your project directory\n";
-            return false;
-        }
         
+        $ch=curl_init($url);
+
+        //params
+        if(is_array($params) || is_object($params)){
+            curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($params));
+        }else{
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
+        }
+
+        //header
         if($return_header){
             curl_setopt($ch,CURLOPT_HEADER,1);
         }
-        
+
+        //headers
+        if($headers){
+            $headers=self::changeArrayToHeaderFormat($headers);
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+        }
+
+
         curl_setopt($ch,CURLOPT_CUSTOMREQUEST,$type);
-        curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
         curl_setopt($ch,CURLOPT_FOLLOWLOCATION,true);
 
         $result=curl_exec($ch);
+
         curl_close($ch);
        
         return $result;
-
+        
     }
 
     //SEND REQUEST WITHOUT RESPONSE
 
     public static function sendRequestWithoutResponse($url,$type='get',$params=[],$headers=[]){
-        $ch=curl_init();
-        if(is_array($params)){
-            curl_setopt($ch,CURLOPT_URL,$url.Server::changeArrayToGetFormat($params));
-        }elseif(strtolower($type)=='post'){
-            curl_setopt($ch,CURLOPT_URL,$url);
-            curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
-        }else{
-            file_put_contents("ErrHandler.log","\nERR MESSAGE: Parameter format is incorrect. You should send array or binary format !\t".date("d M Y H:i:s"),FILE_APPEND);
-            echo "ERR! Check ErrHandler.log file on your project directory\n";
-            return false;
+
+        $ch=curl_init($url);
+
+        //params
+        if($params){
+            curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($params));
         }
-        
+
+        //headers
+        if($headers){
+            $headers=self::changeArrayToHeaderFormat($headers);
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
+        }
+
         curl_setopt($ch,CURLOPT_CUSTOMREQUEST,$type);
         curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,false);
@@ -84,31 +91,13 @@ class Server{
         $result=curl_exec($ch);
         curl_close($ch);
        
-        return $result;
+        return true;
     }
 
 
 
 
     //MAKING VALID FORMAT
-
-
-
-    private static function changeArrayToGetFormat($params){
-
-        $output=''; 
-
-        foreach($params as $key=>$value){
-            $value=str_replace(" ","%20",$value);
-            $output.=$key."=".$value."&";
-
-        }
-
-        return "?".trim($output,"&"); //return GET format (?a=1&b=2&c=3)
-
-    }
-
-
 
     private static function changeArrayToHeaderFormat($headers){
 
