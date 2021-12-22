@@ -3,7 +3,7 @@
 
 <br/>
 
-## full update in v2
+## v3
 ### what's news?
 Added other types of HTTP requests such as PUT, PATCH, DELETE <br>
 updated send requests without response <br>
@@ -18,7 +18,7 @@ return headers with responses <br> to get headers with response, put true in 5th
 
 ## usage
 ```
-Server::sendRequest(string url, array parameters, string request type= get or post or put ... , array headers,bool return headers=true or false); 
+Server::sendRequest(string url, array or string parameters, string request type= get or post or put ... , array headers,bool return headers=true or false); 
 ```
 
 <br/><br/>
