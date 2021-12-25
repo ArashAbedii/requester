@@ -2,6 +2,7 @@
     "name": "arashabedii/server",
     "type": "library",
     "description": "php class to work on different web services",
+    "license": "MIT",
     "authors": [
         {
             "name": "Arash",
@@ -9,5 +10,6 @@
             "homepage": "https://arashabedi.com"
         }
       
-    ]
+    ],
+    "minimum-stability": "dev"
 }
