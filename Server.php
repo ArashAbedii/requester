@@ -1,5 +1,6 @@
 <?php
 
+namespace ArashAbedi;
 
 class Server{
 

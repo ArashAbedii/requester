@@ -1,0 +1,13 @@
+{
+    "name": "arashabedii/server",
+    "type": "library",
+    "description": "php class to work on different web services",
+    "authors": [
+        {
+            "name": "Arash",
+            "email": "arashabedi998@gmail.com",
+            "homepage": "https://arashabedi.com"
+        }
+      
+    ]
+}
