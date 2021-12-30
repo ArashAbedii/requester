@@ -73,8 +73,15 @@ class Server{
         $ch=curl_init($url);
 
         //params
-        if($params){
+        if(is_array($params) || is_object($params)){
             curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($params));
+        }else{
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
+        }
+
+        //header
+        if($return_header){
+            curl_setopt($ch,CURLOPT_HEADER,1);
         }
 
         //headers
