@@ -1,6 +1,6 @@
 <?php
 
-namespace ArashAbedi;
+//github: https://github.com/arashabedii
 
 class Server{
 
