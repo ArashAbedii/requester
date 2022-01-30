@@ -1,0 +1,13 @@
+{
+    "name": "arashabedii/server",
+    "type": "lib",
+    "description": "php requester",
+    "keywords": ["lib", "server"],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0"
+    },
+
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
