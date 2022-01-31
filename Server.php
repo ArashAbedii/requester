@@ -8,7 +8,7 @@ class Server{
 
     //USAGE SEND REQUEST FUNCTION
 
-    public static function sendRequest($url,$params=[],$type='get',array $headers=[],$return_header=false){
+    public static function sendRequest($url,$params=[],$type='get',array $headers=[],array $options=[],$return_header=false){
 
         //check valid data
 
@@ -31,12 +31,14 @@ class Server{
 
     }
 
-    private static function createRequest($url,$type='get',$params=[],$headers=[],$return_header=false){
+    private static function createRequest($url,$type='get',$params=[],$headers=[],$options=[],$return_header=false){
         
         $ch=curl_init($url);
 
         //params
-        if(is_array($params) || is_object($params)){
+        if(in_array('json',$options)){
+            curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($params));
+        }elseif(is_array($params) || is_object($params)){
             curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($params));
         }else{
             curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
@@ -79,10 +81,6 @@ class Server{
             curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
         }
 
-        //header
-        if($return_header){
-            curl_setopt($ch,CURLOPT_HEADER,1);
-        }
 
         //headers
         if($headers){
