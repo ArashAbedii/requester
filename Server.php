@@ -2,6 +2,8 @@
 
 //github: https://github.com/arashabedii
 
+namespace App\Helpers;
+
 class Server{
 
     private static $err=false; 
@@ -18,6 +20,7 @@ class Server{
 
         self::validType($type);
 
+       
 
         if(self::$err==true){
 
@@ -27,18 +30,20 @@ class Server{
 
         }
 
-        return self::createRequest($url,strtoupper($type),$params,$headers,$return_header);
+        return self::createRequest($url,strtoupper($type),$params,$headers,$options,$return_header);
 
     }
 
     private static function createRequest($url,$type='get',$params=[],$headers=[],$options=[],$return_header=false){
         
         $ch=curl_init($url);
-
+       
         //params
-        if(in_array('json',$options)){
+        if(!empty($options) && in_array('json',$options)){
+           
             curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($params));
         }elseif(is_array($params) || is_object($params)){
+            
             curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($params));
         }else{
             curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
