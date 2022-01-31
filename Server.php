@@ -2,7 +2,6 @@
 
 //github: https://github.com/arashabedii
 
-namespace App\Helpers;
 
 class Server{
 
