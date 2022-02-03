@@ -2,6 +2,7 @@
 
 //github: https://github.com/arashabedii
 
+namespace ArashAbedii;
 
 class Server{
 
@@ -102,7 +103,18 @@ class Server{
         return true;
     }
 
-
+    public static function getHost(){
+        $protocol=$_SERVER['SERVER_PROTOCOL'];
+        if($protocol=='HTTP/1.1'){
+            $protocol="http://";
+        }elseif($protocol=='HTTPS/1.1'){
+            $protocol="https://";
+        }
+    
+        $host=$_SERVER['HTTP_HOST'];
+    
+        return $protocol.$host;
+    }
 
 
     //MAKING VALID FORMAT

@@ -1,5 +1,7 @@
 <?php
 
+use ArashAbedii\Server;
+
 require 'Server.php';
 
 $url="http://localhost:8005/app.php";
