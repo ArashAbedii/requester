@@ -41,8 +41,13 @@ class Server{
         //params
         if(!empty($headers['Content-Type'] && strtolower($headers['Content-Type'])=='application/json')){
             curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($params));
-        }elseif(is_array($params) || is_object($params)){
-            curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($params));
+        }elseif(is_array($params) || is_object($params) ){
+            if(strtolower($type)=='get' || strtolower($type)=='put'){
+                curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($params));
+            }else{
+                curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
+            }
+            
         }else{
             curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
         }
