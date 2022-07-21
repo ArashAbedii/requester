@@ -96,7 +96,7 @@ class Server{
             curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
         }
 
-        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,$type);
+        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,strtoupper($type));
         curl_setopt($ch,CURLOPT_HTTPHEADER,$headers);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,false);
         curl_setopt($ch,CURLOPT_TIMEOUT,1);
