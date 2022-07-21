@@ -39,7 +39,7 @@ class Server{
         $ch=curl_init($url);
        
         //params
-        if(!empty($headers['Content-Type'] && strtolower($headers['Content-Type'])=='application/json')){
+        if(!empty($headers['Content-Type']) && strtolower($headers['Content-Type'])=='application/json'){
             curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($params));
         }elseif(is_array($params) || is_object($params) ){
             if(strtolower($type)=='get' || strtolower($type)=='put'){
