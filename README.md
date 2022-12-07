@@ -3,7 +3,7 @@
 
 <br/>
 
-## v3.1
+## v1.3
 ### what's news?
 Added requests logger <br>
 All requests log will be store in requests.log file
