@@ -12,7 +12,7 @@ All requests log will be store in requests.log file
 <br/>
 <br/>
 
-#### Install via composer
+## Install via composer
 <br/>
 Go to your project root directory and run this command in terminal:
 
