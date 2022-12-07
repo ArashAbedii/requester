@@ -3,29 +3,37 @@
 
 <br/>
 
-## v3
+## v3.1
 ### what's news?
-Added other types of HTTP requests such as PUT, PATCH, DELETE <br>
-updated send requests without response <br>
-return headers with responses <br> to get headers with response, put true in 5th parameter of sendRequest method
+Added requests logger <br>
+All requests log will be store in requests.log file
 
 
+<br/>
+<br/>
 
+#### Install via composer
+<br/>
+Go to your project root directory and run this command in terminal:
 
+```
+composer require arashabedii/server 
+```
 
-<br>
-<br>
+<br/>
+<br/>
 
 ## usage
 ```
-Server::sendRequest(string url, array or string parameters, string request type= get or post or put ... , array headers,bool return headers=true or false); 
+Server::sendRequest(string url, array or string or file context, string request type= get or post or put ... , array headers,bool return headers=true or false); 
 ```
 
-<br/><br/>
+<br/>
+<br/>
 
-#### at first include Server.php file to your project file  <br/>
+#### at first include autoload.php file to your project file  <br/>
 ```
-require 'Server.php'; 
+require 'vendor/autoload.php'; 
 ```
 #### after you can call Server::sendRequest() to send your requests. 
 
@@ -39,7 +47,9 @@ require 'Server.php';
  ```PHP
   <?php
 
-      require 'Server.php';
+      require './vendor/autoload.php';
+
+      use ArashAbedii\Server;
 
       //SEND GET REQUEST
       $url="https://cat-fact.herokuapp.com/facts/random";
@@ -58,7 +68,9 @@ require 'Server.php';
 ```PHP
   <?php
 
-      require 'Server.php';
+      require './vendor/autoload.php';
+
+      use ArashAbedii\Server;
 
       //SEND POST REQUEST
       $url="https://api.example.com/method";
@@ -77,7 +89,9 @@ require 'Server.php';
 ```PHP
   <?php
 
-      require 'Server.php';
+      require './vendor/autoload.php';
+
+      use ArashAbedii\Server;
 
       //SEND PUT REQUEST
       $url="https://api.example.com/method";
@@ -96,7 +110,9 @@ require 'Server.php';
 ```PHP
   <?php
 
-      require 'Server.php';
+      require './vendor/autoload.php';
+
+      use ArashAbedii\Server;
 
       //SEND DELETE REQUEST
       $url="https://api.example.com/method";
@@ -117,7 +133,9 @@ require 'Server.php';
   ```PHP
   <?php
 
-      require 'Server.php';
+      require './vendor/autoload.php';
+
+      use ArashAbedii\Server;
 
       //SEND POST REQUEST
       $url="https://api.example.com/v1/method";
