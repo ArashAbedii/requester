@@ -70,6 +70,11 @@ class Server{
 
         $result=curl_exec($ch);
 
+        if($headers){
+            curl_close($ch);
+            return json_encode(curl_getinfo($ch));
+        }
+
         curl_close($ch);
        
         return $result;
@@ -113,6 +118,10 @@ class Server{
         if($protocol=='HTTP/1.1'){
             $protocol="http://";
         }elseif($protocol=='HTTPS/1.1'){
+            $protocol="https://";
+        }elseif($protocol=='HTTPS/2.1'){
+            $protocol="https://";
+        }elseif($protocol=='HTTPS/2.1'){
             $protocol="https://";
         }
     
