@@ -37,6 +37,7 @@ class Server{
     private static function createRequest($url,$type='get',$params=[],$headers=[],$return_header=false){
         
         $ch=curl_init($url);
+        $response_headers="";
        
         //params
         if(!empty($headers['Content-Type']) && strtolower($headers['Content-Type'])=='application/json'){
@@ -70,10 +71,17 @@ class Server{
 
         $result=curl_exec($ch);
 
+        $response_headers=json_encode(curl_getinfo($ch));
+
         if($headers){
             curl_close($ch);
-            return json_encode(curl_getinfo($ch));
+            return $response_headers;
         }
+
+
+        //log all requests
+        // Logger::doLog($url,$params,$type,$headers,$return_header,json_decode($result),json_decode($response_headers));
+        Logger::doLog($url,$params,$type,$headers,$return_header,json_decode($result),json_decode($response_headers));
 
         curl_close($ch);
        
