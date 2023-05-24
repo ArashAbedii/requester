@@ -1,8 +1,8 @@
 {
-    "name": "arashabedii/server",
+    "name": "arashabedii/requester",
     "type": "lib",
     "description": "php requester",
-    "keywords": ["lib", "server"],
+    "keywords": ["lib", "curl" , "http request"],
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0"
