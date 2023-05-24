@@ -1,0 +1,12 @@
+request_url: https://reqres.in/api/users/2
+request_method: DELETE
+status: 204
+response: "{\"url\":\"https:\\\/\\\/reqres.in\\\/api\\\/users\\\/2\",\"content_type\":null,\"http_code\":204,\ ....
+request_date: 2023-05-24 12:05:05
+------------------------
+request_url: https://reqres.in/api/users
+request_method: GET
+status: 200
+response: "{\"url\":\"https:\\\/\\\/reqres.in\\\/api\\\/users\",\"content_type\":\"application\\\/json; charse ....
+request_date: 2023-05-24 12:09:29
+------------------------
