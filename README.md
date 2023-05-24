@@ -1,4 +1,4 @@
-# SERVER
+# Request
 ## php class to send requests
 ### Simple & Fast & Very light
 
