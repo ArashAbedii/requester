@@ -1,13 +1,17 @@
 # SERVER
-## php class to work on different web services (API)
+## php class to send requests
+### Simple & Fast & Very light
 
 <br/>
 
-## v1.3
-### what's news?
-Added requests logger <br>
-All requests log will be store in requests.log file
+### features
 
+send GET , POST , PUT , PATCH , DELETE requests <br/>
+send params in simple array <br/>
+send headers in simple array <br/>
+requests auto logging <br/>
+error logger <br/>
+send request without waiting for response <br/>
 
 <br/>
 <br/>
@@ -17,7 +21,7 @@ All requests log will be store in requests.log file
 Go to your project root directory and run this command in terminal:
 
 ```
-composer require arashabedii/server 
+composer require arashabedii/requester 
 ```
 
 <br/>
@@ -25,9 +29,9 @@ composer require arashabedii/server
 
 ## usage
 ```
-Server::sendRequest(string url, array or string or file context, string request type= get or post or put ... , array headers,bool return headers=true or false); 
+# to enable request logging just pass $logger=true to send method
+Request::send([string] url, [array] or [string] or [file context] params, [string] request type , [array] headers,[bool] logger); 
 ```
-
 <br/>
 <br/>
 
@@ -35,7 +39,7 @@ Server::sendRequest(string url, array or string or file context, string request 
 ```
 require 'vendor/autoload.php'; 
 ```
-#### after you can call Server::sendRequest() to send your requests. 
+#### after you can call Request::send() to send your requests. 
 
 <br/><br/>
 
@@ -45,107 +49,140 @@ require 'vendor/autoload.php';
 
  **SEND GET REQUEST** <br />
  ```PHP
-  <?php
+<?php
+use ArashAbedii\Request;
 
-      require './vendor/autoload.php';
+require './vendor/autoload.php';
 
-      use ArashAbedii\Server;
+#------------------------------SIMPLE GET REQUEST---------------------------
+$url="https://reqres.in/api/users";
+$method='GET';
+$params=[
+    'delay'=>1,
+];
+$headers=[
+    'Content-Type'=>'application/json',
+];
+$logger=true; //enable or diable logging requests
+$response=Request::send($url,$params,$method,$headers,$logger);
 
-      //SEND GET REQUEST
-      $url="https://cat-fact.herokuapp.com/facts/random";
-      $params=['animal_type'=>'cat','amount'=>5];
-      $response=Server::sendRequest($url,$params,'GET');
-
-      echo '<pre>';
-      var_dump(json_decode($response,true));
-      echo '</pre>';
+//show headers
+echo $response->headers;
+//show response body
+echo $response->body;
 
  ```
 <br/><br/>
 
 
 **SEND POST REQUEST** <br/>
-```PHP
-  <?php
+ ```PHP
+<?php
+use ArashAbedii\Request;
 
-      require './vendor/autoload.php';
+require './vendor/autoload.php';
 
-      use ArashAbedii\Server;
+#------------------------------SIMPLE POST REQUEST---------------------------
+$url="https://reqres.in/api/users";
+$method='POST';
+$params=[
+    'name'=>'myname',
+    'job'=>'myjob'
+];
+$headers=[
+    'Content-Type'=>'application/json',
+];
+$logger=false; //enable or diable logging requests
+$response=Request::send($url,$params,$method,$headers,$logger);
 
-      //SEND POST REQUEST
-      $url="https://api.example.com/method";
-      $params=['parameter1'=>'1','parameter2'=>2];
-      $response=Server::sendRequest($url,$params,'POST');
+//show headers
+echo $response->headers;
+//show response body
+echo $response->body;
 
-      echo '<pre>';
-      var_dump(json_decode($response,true));
-      echo '</pre>';
-
-```
-
+ ```
 <br/><br/>
 
 **SEND PUT REQUEST** <br/>
-```PHP
-  <?php
+ ```PHP
+<?php
+use ArashAbedii\Request;
 
-      require './vendor/autoload.php';
+require './vendor/autoload.php';
 
-      use ArashAbedii\Server;
+#------------------------------SIMPLE PUT REQUEST---------------------------
+$url="https://reqres.in/api/users/2";
+$method='PUT';
+$params=[
+    'name'=>'myname2',
+    'job'=>'myjob2'
+];
+$headers=[
+    'Content-Type'=>'application/json',
+];
+$logger=false; //enable or diable logging requests
+$response=Request::send($url,$params,$method,$headers,$logger);
 
-      //SEND PUT REQUEST
-      $url="https://api.example.com/method";
-      $params=['parameter1'=>'1','parameter2'=>2];
-      $response=Server::sendRequest($url,$params,'PUT');
+//show headers
+echo $response->headers;
+//show response body
+echo $response->body;
 
-      echo '<pre>';
-      var_dump(json_decode($response,true));
-      echo '</pre>';
+ ```
+<br/><br/>
 
-```
+**SEND PATCH REQUEST** <br/>
+ ```PHP
+<?php
+use ArashAbedii\Request;
 
+require './vendor/autoload.php';
+
+#------------------------------SIMPLE PATCH REQUEST---------------------------
+$url="https://reqres.in/api/users/2";
+$method='PATCH';
+$params=[
+    'name'=>'myname2',
+    'job'=>'myjob2'
+];
+$headers=[
+    'Content-Type'=>'application/json',
+];
+$logger=false; //enable or diable logging requests
+$response=Request::send($url,$params,$method,$headers,$logger);
+
+//show headers
+echo $response->headers;
+//show response body
+echo $response->body;
+
+ ```
 <br/><br/>
 
 **SEND DELETE REQUEST** <br/>
-```PHP
-  <?php
+ ```PHP
+<?php
+use ArashAbedii\Request;
 
-      require './vendor/autoload.php';
+require './vendor/autoload.php';
 
-      use ArashAbedii\Server;
+#------------------------------SIMPLE DELETE REQUEST---------------------------
+$url="https://reqres.in/api/users/2";
+$method='DELETE';
+$params=[
+    //no params or your params
+];
+$headers=[
+    'Content-Type'=>'application/json',
+];
+$logger=true; //enable or diable logging requests
 
-      //SEND DELETE REQUEST
-      $url="https://api.example.com/method";
-      $params=['parameter1'=>'1','parameter2'=>2];
-      $response=Server::sendRequest($url,$params,'DELETE');
+$response=Request::send($url,$params,$method,$headers,$logger);
 
-      echo '<pre>';
-      var_dump(json_decode($response,true));
-      echo '</pre>';
+//show headers
+echo $response->headers;
+//show response body
+echo $response->body;
 
-```
-
+ ```
 <br/><br/>
-
-
-**SEND POST REQUEST WITH HEADERS**  <br/>
-
-  ```PHP
-  <?php
-
-      require './vendor/autoload.php';
-
-      use ArashAbedii\Server;
-
-      //SEND POST REQUEST
-      $url="https://api.example.com/v1/method";
-      $headers=['Authorization'=>'Bearer ACCESS_TOKEN'];
-      $params=[];
-      //send request
-      $response=Server::sendRequest($url,[],$request_type,$headers); 
-
-      echo '<pre>';
-      var_dump(json_decode($response,true));
-      echo '</pre>';
-
-```
