@@ -12,7 +12,7 @@ $params=[
 $headers=[
     'Content-Type'=>'application/json',
 ];
-$logger=true; //enable or diable logging requests
+$logger=true; //enable or disable to logging requests
 $response=Request::send($url,$params,$method,$headers,$logger);
 
 //show headers

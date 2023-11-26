@@ -34,7 +34,7 @@ class Request{
     }
 
     //request creator
-    private static function createRequest($url,$type='GET',$params=[],$headers=[],$logger){
+    private static function createRequest($url,$type='GET',$params=[],$headers=[],$logger=false){
         
         $ch=curl_init($url);
        
@@ -119,20 +119,7 @@ class Request{
 
     //get host name
     public static function getHost(){
-        $protocol=$_SERVER['SERVER_PROTOCOL'];
-        if($protocol=='HTTP/1.1'){
-            $protocol="http://";
-        }elseif($protocol=='HTTPS/1.1'){
-            $protocol="https://";
-        }elseif($protocol=='HTTPS/2.1'){
-            $protocol="https://";
-        }elseif($protocol=='HTTPS/2.1'){
-            $protocol="https://";
-        }
-    
-        $host=$_SERVER['HTTP_HOST'];
-    
-        return $protocol.$host;
+        return $_SERVER['HTTP_HOST'];
     }
 
 
@@ -199,11 +186,5 @@ class Request{
         }
 
     }
-
-
-
-
-
-
 
 }
